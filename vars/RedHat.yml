@@ -1,0 +1,17 @@
+---
+# file: roles/horizon/vars/RedHat.yml
+horizon_packages:
+  - gcc
+  - git
+  - libffi-devel
+  - libxslt-devel
+  - python-devel
+  - python-greenlet-devel
+  - python-ldap
+  - python-lxml
+  - python-pip
+  - python-setuptools
+  - python-virtualenv
+  - openldap-devel
+  - openssl-devel
+  - sqlite-devel

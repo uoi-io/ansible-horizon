@@ -1,0 +1,8 @@
+---
+# file: roles/horizon/tasks/firewall.yml
+- name: Horizon firewalld rule
+  firewalld:
+    port="{{ horizon_port }}/tcp"
+    permanent=true
+    state=enabled
+    immediate=true

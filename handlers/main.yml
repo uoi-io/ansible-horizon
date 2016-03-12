@@ -1,0 +1,10 @@
+---
+# file: roles/horizon/tasks/main.yml
+- name: systemctl reload
+  command: systemctl --system daemon-reload
+
+- name: restart horizon
+  command: systemctl restart openstack-dashboard
+
+- name: restart nginx
+  command: systemctl restart nginx

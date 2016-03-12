@@ -1,0 +1,25 @@
+uwsgi:
+  socket: /run/uwsgi/horizon/horizon.sock
+  chmod-socket: 666
+  processes: {{ horizon_uwsgi_processes }}
+  threads: {{ horizon_uwsgi_threads }}
+  harakiri: {{ horizon_uwsgi_harakiri }}
+  max-requests: {{ horizon_uwsgi_max_requests }}
+
+  master: true
+  enable-threads: true
+  thunder-lock: true
+  honour-stdin: true
+  memory-report: true
+  vacuum: true
+  die-on-term: true
+
+  name: horizon-dashboard
+  uid: {{ horizon_user }}
+  gid: {{ horizon_group }}
+
+  home: {{ working_dir }}/virtualenvs/horizon
+  chdir: {{ working_dir }}/virtualenvs/horizon/lib/python2.7/site-packages
+  wsgi-file: openstack_dashboard/wsgi/django.wsgi
+
+  daemonize: /var/log/uwsgi/horizon/horizon.log

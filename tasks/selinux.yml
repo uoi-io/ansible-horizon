@@ -1,0 +1,22 @@
+---
+# file: roles/horizon/tasks/selinux.yml
+- name: Labeling SELinux ports for Horizon
+  seport:
+    ports={{ horizon_port }}
+    proto=tcp
+    setype=commplex_link_port_t
+    state=present
+- seport:
+    ports=35358
+    proto=tcp
+    setype=ephemeral_port_t
+    state=present
+
+- name: Allowing SELinux booleans for Horizon
+  seboolean:
+    name={{ item }}
+    state=yes
+    persistent=yes
+  with_items:
+    - httpd_can_network_connect
+    - httpd_use_openstack

@@ -1,0 +1,21 @@
+---
+# file: roles/horizon/defaults/main.yml
+horizon_firewalld: true
+horizon_selinux: false
+horizon_uoi_download: false
+
+horizon_user: horizon
+horizon_group: horizon
+horizon_uid: 2002
+horizon_gid: 2002
+
+horizon_git_url: https://github.com/openstack/horizon.git
+horizon_version: stable/liberty
+
+horizon_uwsgi_processes: 5
+horizon_uwsgi_threads: 2
+horizon_uwsgi_harakiri: 20
+horizon_uwsgi_max_requests: 10000
+
+horizon_nginx_bind: 0.0.0.0
+horizon_port: 8080

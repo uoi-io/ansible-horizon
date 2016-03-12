@@ -1,0 +1,16 @@
+---
+# file: repos/horizon/tasks/user.yml
+- name: Creating horizon system group
+  group:
+    name={{ horizon_group }}
+    gid={{ horizon_gid }}
+
+- name: Creating horizon system user
+  user:
+    name={{ horizon_user }}
+    home={{ horizon_dir }}
+    createhome=yes
+    uid={{ horizon_uid }}
+    shell=/bin/false
+    comment="Horizon user"
+    force=yes

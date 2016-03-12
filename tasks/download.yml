@@ -1,0 +1,21 @@
+---
+# file: roles/horizon/tasks/download.yml
+- name: Deleting exists Horizon virtualenv
+  file:
+    path={{ working_dir }}/virtualenvs/horizon
+    state=absent
+
+- name: Downloading Horizon virtualenv from UOI
+  get_url:
+    url={{ uoi_virtualenvs_url }}/{{ horizon_version.split('/')[1] }}/uoi-horizon.tar.gz
+    dest={{ working_dir }}/virtualenvs/
+
+- name: Unarchiving Horizon virtualenv from UOI
+  shell:
+    cd {{ working_dir }}/virtualenvs && 
+    tar xzf uoi-horizon.tar.gz
+
+- name: Deleting Horizon UOI archive
+  file:
+    path={{ working_dir }}/virtualenvs/uoi-horizon.tar.gz
+    state=absent

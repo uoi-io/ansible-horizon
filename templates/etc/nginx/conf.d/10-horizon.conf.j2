@@ -1,0 +1,11 @@
+server {
+	listen {{ horizon_nginx_bind }}:{{ horizon_port }} default_server;
+	server_name localhost;
+
+	location / {
+		include uwsgi_params;
+		uwsgi_pass unix:/run/uwsgi/horizon/horizon.sock;
+		uwsgi_param SCRIPT_NAME /;
+	}
+
+}

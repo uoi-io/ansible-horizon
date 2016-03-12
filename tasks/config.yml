@@ -1,0 +1,14 @@
+---
+# file: roles/keystone/tasks/config.yml
+- name: Set keystone configuration
+  ini_file:
+    dest=/etc/keystone/keystone.conf
+    section={{ item.0 }}
+    option={{ item.1 }}
+    value={{ item.2 }}
+    group={{ keystone_group }}
+    mode=640
+  with_inidata: "{{ keystone_config }}"
+  notify: restart keystone
+
+- meta: flush_handlers

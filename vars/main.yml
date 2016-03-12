@@ -1,0 +1,4 @@
+---
+# file: roles/horizon/vars/main.yml
+horizon_dir: /var/lib/horizon
+working_dir: /srv/data

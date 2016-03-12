@@ -1,0 +1,51 @@
+---
+# file: repo/horizon/tasks/main.yml
+- include_vars: "{{ ansible_os_family }}.yml"
+  tags:
+    - horizon
+    - horizon-user
+    - horizon-prepare
+    - horizon-firewalld
+    - horizon-selinux
+    - horizon-download
+    - horizon-virtualenv
+    - horizon-install
+    - horizon-config
+    - horizon-nginx
+
+- include: user.yml
+  tags: [ horizon, horizon-user ]
+
+- include: prepare.yml
+  tags: [ horizon, horizon-prepare ]
+
+- include: firewall.yml
+  when: horizon_firewalld is defined and
+        horizon_firewalld
+  tags: [ horizon, horizon-firewalld ]
+
+- include: selinux.yml
+  when: horizon_selinux is defined and
+        horizon_selinux
+  tags: [ horizon, horizon-selinux ]
+
+- include: download.yml
+  when: horizon_uoi_download is defined and
+        horizon_uoi_download
+  tags: [ horizon, horizon-download ]
+
+- include: virtualenv.yml
+  tags: [ horizon, horizon-virtualenv ]
+  when: horizon_uoi_download is defined and
+        not horizon_uoi_download
+
+- include: install.yml
+  tags: [ horizon, horizon-install ]
+  when: horizon_uoi_download is defined and
+        not horizon_uoi_download
+
+- include: nginx.yml
+  tags: [ horizon, horizon-nginx ]
+
+#- include: config.yml
+#  tags: [ horizon, horizon-config ]

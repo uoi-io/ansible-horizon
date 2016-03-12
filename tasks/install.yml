@@ -1,0 +1,48 @@
+---
+# file: repo/horizon/tasks/install.yml
+- name: Installing packages needed by Horizon
+  package:
+    name={{ item }}
+    state=latest
+  with_items: "{{ horizon_packages }}"
+
+- name: Getting Horizon source code
+  git:
+    repo={{ horizon_git_url }}
+    dest={{ working_dir}}/openstack/horizon
+    version={{ horizon_version }}
+
+- name: Installing Horizon requirements via pip
+  pip:
+    virtualenv={{ working_dir }}/virtualenvs/horizon
+    requirements={{ working_dir }}/openstack/horizon/requirements.txt
+
+- name: Installing Horizon via setup.py
+  shell:
+    source {{ working_dir }}/virtualenvs/horizon/bin/activate && \
+    cd {{ working_dir }}/openstack/horizon && \
+    python setup.py install --record /var/log/horizon/horizon-setup.log
+
+#- name: Copying Horizon config files
+#  copy:
+#    src={{ working_dir }}/openstack/horizon/etc/logging.conf.sample
+#    dest={{ working_dir }}/virtualenvs/horizon/etc/horizon/logging.conf
+#    remote_src=yes
+#    group={{ horizon_group }}
+#    mode=0640
+#
+#- copy:
+#    src={{ working_dir }}/openstack/horizon/etc/{{ item }}
+#    dest={{ working_dir }}/virtualenvs/horizon/etc/horizon/{{ item }}
+#    remote_src=yes
+#    group={{ horizon_group }}
+#    mode=0640
+#  with_items:
+#    - horizon-paste.ini
+#    - policy.json
+#
+#- name: Linking /etc/horizon directory to Horizon virtualenv
+#  file:
+#    src={{ working_dir }}/virtualenvs/horizon/etc/horizon
+#    dest=/etc/horizon
+#    state=link

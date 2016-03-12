@@ -1,0 +1,11 @@
+---
+# file: roles/horizon/vars/Debian.yml
+horizon_packages:
+  - python-devel
+  - python-pip
+  - MariaDB-devel
+  - openssl-devel
+  - libffi-devel
+  - python-setuptools
+  - gcc
+  - git

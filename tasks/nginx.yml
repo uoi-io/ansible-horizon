@@ -1,0 +1,50 @@
+---
+# file: roles/horizon/tasks/nginx.yml
+- name: Installing uWSGI from pip
+  pip:
+    name=uwsgi
+
+- name: Installing Nginx HTTP server
+  package:
+    name=nginx
+    state=latest
+
+- name: Adding systemd declaration for uWSGI Horizon
+  copy:
+    src=usr/lib/systemd/system/openstack-dashboard.service
+    dest=/usr/lib/systemd/system/openstack-dashboard.service
+  notify: systemctl reload
+
+- name: Configuring uWSGI for Horizon
+  template:
+    src=etc/uwsgi.d/horizon/horizon.yml.j2
+    dest=/etc/uwsgi.d/horizon/horizon.yml
+  notify: restart horizon
+
+- name: Enabling and starting Horizon service
+  service:
+    name=openstack-dashboard
+    state=started
+    enabled=yes
+
+- name: Creating Nginx Horizon virtualhost
+  template:
+    src=etc/nginx/conf.d/10-horizon.conf.j2
+    dest=/etc/nginx/conf.d/10-horizon.conf
+  notify: restart nginx
+
+- name: Cleaning Nginx configuration
+  file:
+    name={{ item }}
+    state=absent
+  with_items:
+    - /etc/nginx/conf.d/default.conf
+    - /etc/nginx/conf.d/example_ssl.conf
+
+- name: Enabling and starting Nginx service
+  service:
+    name=nginx
+    state=restarted
+    enabled=yes
+
+- meta: flush_handlers

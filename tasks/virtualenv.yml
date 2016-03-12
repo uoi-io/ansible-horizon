@@ -1,0 +1,10 @@
+---
+# file: roles/horizon/tasks/virtualenv.yml
+- name: Creating Horizon virtualenv
+  pip:
+    name={{ item }}
+    state=latest
+    virtualenv={{ working_dir }}/virtualenvs/horizon
+  with_items:
+    - pip
+    - MySQL-python

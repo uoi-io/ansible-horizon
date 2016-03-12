@@ -1,0 +1,23 @@
+---
+# file: roles/horizon/tasks/prepare.yml
+- name: Creating Horizon directories
+  file:
+    path={{ item }}
+    state=directory
+    recurse=yes
+  with_items:
+    - /var/log/horizon
+    - /run/uwsgi/horizon
+    - /etc/uwsgi.d/horizon
+    - /var/log/uwsgi/horizon
+    - "{{ working_dir }}/openstack"
+    - "{{ working_dir }}/virtualenvs/horizon/etc/horizon"
+
+- file:
+    path={{ item }}
+    owner={{ horizon_user }}
+    group={{ horizon_group }}
+  with_items:
+    - /var/log/horizon
+    - /run/uwsgi/horizon
+    - /var/log/uwsgi/horizon
