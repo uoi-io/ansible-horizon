@@ -23,26 +23,16 @@
     cd {{ working_dir }}/openstack/horizon && \
     python setup.py install --record /var/log/horizon/horizon-setup.log
 
-#- name: Copying Horizon config files
-#  copy:
-#    src={{ working_dir }}/openstack/horizon/etc/logging.conf.sample
-#    dest={{ working_dir }}/virtualenvs/horizon/etc/horizon/logging.conf
-#    remote_src=yes
-#    group={{ horizon_group }}
-#    mode=0640
-#
-#- copy:
-#    src={{ working_dir }}/openstack/horizon/etc/{{ item }}
-#    dest={{ working_dir }}/virtualenvs/horizon/etc/horizon/{{ item }}
-#    remote_src=yes
-#    group={{ horizon_group }}
-#    mode=0640
-#  with_items:
-#    - horizon-paste.ini
-#    - policy.json
-#
-#- name: Linking /etc/horizon directory to Horizon virtualenv
-#  file:
-#    src={{ working_dir }}/virtualenvs/horizon/etc/horizon
-#    dest=/etc/horizon
-#    state=link
+- name: Copying Horizon local_settings.py config file
+  copy:
+    src={{ working_dir }}/openstack/horizon/openstack_dashboard/local/local_settings.py.example
+    dest={{ working_dir }}/virtualenvs/horizon/lib/python2.7/site-packages/openstack_dashboard/local/local_settings.py
+    remote_src=yes
+    group={{ horizon_group }}
+    mode=0640
+
+- name: Linking /etc/openstack-dashboard directory to Horizon virtualenv
+  file:
+    src={{ working_dir }}/virtualenvs/horizon/lib/python2.7/site-packages/openstack_dashboard/local
+    dest=/etc/openstack-dashboard
+    state=link
