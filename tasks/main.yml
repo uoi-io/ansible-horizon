@@ -40,12 +40,12 @@
         not horizon_uoi_download
 
 - include: install.yml
-  tags: [ horizon, horizon-install ]
   when: horizon_uoi_download is defined and
         not horizon_uoi_download
+  tags: [ horizon, horizon-install ]
 
 - include: nginx.yml
   tags: [ horizon, horizon-nginx ]
 
-#- include: config.yml
-#  tags: [ horizon, horizon-config ]
+- include: config.yml
+  tags: [ horizon, horizon-config ]
