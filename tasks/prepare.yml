@@ -11,7 +11,7 @@
     - /etc/uwsgi.d/horizon
     - /var/log/uwsgi/horizon
     - "{{ working_dir }}/openstack"
-    - "{{ working_dir }}/virtualenvs/horizon/etc/horizon"
+    - "{{ working_dir }}/virtualenvs/horizon"
 
 - file:
     path={{ item }}
