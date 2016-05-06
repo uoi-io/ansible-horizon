@@ -6,11 +6,6 @@
     proto=tcp
     setype=commplex_link_port_t
     state=present
-- seport:
-    ports=35358
-    proto=tcp
-    setype=ephemeral_port_t
-    state=present
 
 - name: Allowing SELinux booleans for Horizon
   seboolean:
@@ -20,3 +15,15 @@
   with_items:
     - httpd_can_network_connect
     - httpd_use_openstack
+
+- name: Building and installing SELinux module
+  copy:
+    src=selinux/horizon.te
+    dest=/tmp/
+
+- command:
+    /usr/bin/checkmodule -M -m -o /tmp/horizon.mod /tmp/horizon.te
+- command:
+    /usr/bin/semodule_package -m /tmp/horizon.mod -o /tmp/horizon.pp
+- command:
+    /usr/sbin/semodule -i /tmp/horizon.pp

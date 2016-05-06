@@ -1,13 +1,13 @@
 ---
 # file: roles/horizon/defaults/main.yml
 horizon_firewalld: true
-horizon_selinux: false
+horizon_selinux: true
 horizon_uoi_download: false
 
 horizon_user: horizon
 horizon_group: horizon
-horizon_uid: 2002
-horizon_gid: 2002
+horizon_uid: 2003
+horizon_gid: 2003
 
 horizon_git_url: https://github.com/openstack/horizon.git
 horizon_version: stable/liberty
