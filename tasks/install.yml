@@ -36,3 +36,10 @@
     src={{ working_dir }}/virtualenvs/horizon/lib/python2.7/site-packages/openstack_dashboard/local
     dest=/etc/openstack-dashboard
     state=link
+
+- name: Set the right user permissions to the virtualenv
+  file:
+    path={{ working_dir }}/virtualenvs/horizon
+    owner={{ horizon_uid }}
+    group={{ horizon_gid }}
+    recurse=yes
