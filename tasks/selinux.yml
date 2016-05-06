@@ -2,10 +2,13 @@
 # file: roles/horizon/tasks/selinux.yml
 - name: Labeling SELinux ports for Horizon
   seport:
-    ports={{ horizon_port }}
+    ports={{ item }}
     proto=tcp
     setype=commplex_link_port_t
     state=present
+  with_items:
+    - "{{ horizon_internal_port }}"
+    - "{{ horizon_public_port }}"
 
 - name: Allowing SELinux booleans for Horizon
   seboolean:

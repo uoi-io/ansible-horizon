@@ -18,4 +18,5 @@ horizon_uwsgi_harakiri: 20
 horizon_uwsgi_max_requests: 10000
 
 horizon_nginx_bind: 0.0.0.0
-horizon_port: 8080
+horizon_internal_port: 8080
+horizon_public_port: 80
