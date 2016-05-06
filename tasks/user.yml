@@ -11,6 +11,7 @@
     home={{ horizon_dir }}
     createhome=yes
     uid={{ horizon_uid }}
+    uid={{ horizon_gid }}
     shell=/bin/false
     comment="Horizon user"
     force=yes
