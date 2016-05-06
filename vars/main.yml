@@ -1,4 +1,4 @@
 ---
 # file: roles/horizon/vars/main.yml
-horizon_dir: /var/lib/horizon
+horizon_dir: "{{ working_dir }}/virtualenvs/horizon"
 working_dir: /srv/data
