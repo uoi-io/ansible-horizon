@@ -1,0 +1,12 @@
+{% if horizon_caching and horizon_caching_backend and horizon_caching_servers %}
+
+CACHES = {
+    'default': {
+        'BACKEND': '{{ horizon_caching_backend }}',
+        'LOCATION': '{{ horizon_caching_servers }}',
+    }
+}
+
+SESSION_ENGINE = '{{ horizon_caching_session_engine | default('django.contrib.sessions.backends.cache') }}'
+
+{% endif %}
