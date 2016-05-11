@@ -20,3 +20,9 @@ horizon_uwsgi_max_requests: 10000
 horizon_nginx_bind: 0.0.0.0
 horizon_internal_port: 8080
 horizon_public_port: 80
+
+horizon_config: []
+
+horizon_caching: true
+horizon_caching_backend: django.core.cache.backends.memcached.MemcachedCache
+horizon_caching_servers: 172.0.0.124:11211;172.0.0.125:11211;172.0.0.126:11211
