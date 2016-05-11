@@ -13,5 +13,5 @@
     uid={{ horizon_uid }}
     group={{ horizon_group }}
     shell=/bin/false
-    comment="Horizon user"
+    comment="Horizon OpenStack user"
     force=yes
