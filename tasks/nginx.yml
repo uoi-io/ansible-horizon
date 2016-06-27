@@ -4,15 +4,20 @@
   pip:
     name=uwsgi
 
+- name: Mask Nginx service (Debian family)
+  command:
+    systemctl mask nginx
+  when: ansible_os_family == 'Debian'
+
 - name: Installing Nginx HTTP server
   package:
     name=nginx
     state=latest
 
 - name: Adding systemd declaration for uWSGI Horizon
-  copy:
-    src=usr/lib/systemd/system/openstack-dashboard.service
-    dest=/usr/lib/systemd/system/openstack-dashboard.service
+  template:
+    src=usr/lib/systemd/system/openstack-dashboard.service.j2
+    dest="{{ horizon_systemd_path }}/system/openstack-dashboard.service"
   notify: systemctl reload
 
 - name: Configuring uWSGI for Horizon
@@ -30,7 +35,7 @@
 - name: Creating Nginx Horizon virtualhost
   template:
     src=etc/nginx/conf.d/10-horizon.conf.j2
-    dest=/etc/nginx/conf.d/10-horizon.conf
+    dest="{{ horizon_nginx_configdir }}/10-horizon.conf"
   notify: restart nginx
 
 - name: Cleaning Nginx configuration
@@ -38,8 +43,14 @@
     name={{ item }}
     state=absent
   with_items:
-    - /etc/nginx/conf.d/default.conf
-    - /etc/nginx/conf.d/example_ssl.conf
+    - "{{ horizon_nginx_configdir }}/default.conf"
+    - "{{ horizon_nginx_configdir }}/default"
+    - "{{ horizon_nginx_configdir }}/example_ssl.conf"
+
+- name: Unmask Nginx service (Debian family)
+  command:
+    systemctl unmask nginx
+  when: ansible_os_family == 'Debian'
 
 - name: Enabling and starting Nginx service
   service:
