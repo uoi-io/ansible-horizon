@@ -22,6 +22,8 @@
     source {{ working_dir }}/virtualenvs/horizon/bin/activate && \
     cd {{ working_dir }}/openstack/horizon && \
     python setup.py install --record /var/log/horizon/horizon-setup.log
+  args:
+    executable: /bin/bash
 
 - name: Copying Horizon local_settings.py config file
   copy:
