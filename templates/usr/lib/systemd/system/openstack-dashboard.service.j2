@@ -3,7 +3,7 @@ Description=uWSGI instance to serve Horizon dashboard
 After=network.target syslog.target
 
 [Service]
-ExecStart=/usr/bin/uwsgi --emperor /etc/uwsgi.d/horizon
+ExecStart={{ horizon_uwsgi_path }} --emperor /etc/uwsgi.d/horizon
 ExecReload=/bin/kill -HUP $MAINPID
 KillSignal=SIGINT
 Restart=always

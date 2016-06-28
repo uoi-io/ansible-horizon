@@ -15,3 +15,7 @@ horizon_packages:
   - openldap-devel
   - openssl-devel
   - sqlite-devel
+horizon_systemd_path: /usr/lib/systemd
+horizon_uwsgi_path: /usr/sbin/uwsgi
+horizon_nginx_user: nginx
+horizon_nginx_configdir: /etc/nginx/conf.d

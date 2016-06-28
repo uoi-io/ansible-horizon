@@ -1,11 +1,17 @@
 ---
 # file: roles/horizon/vars/Debian.yml
 horizon_packages:
-  - python-devel
-  - python-pip
-  - MariaDB-devel
-  - openssl-devel
-  - libffi-devel
-  - python-setuptools
   - gcc
   - git
+  - libffi-dev
+  - python-dev
+  - python-pip
+  - python-setuptools
+  - python-virtualenv
+  - libssl-dev
+  - libmariadbclient-dev
+  - postgresql-server-dev-all
+horizon_systemd_path: /lib/systemd
+horizon_uwsgi_path: /usr/local/bin/uwsgi
+horizon_nginx_user: www-data
+horizon_nginx_configdir: /etc/nginx/sites-enabled
