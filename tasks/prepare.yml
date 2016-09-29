@@ -1,25 +1,22 @@
 ---
 # file: roles/horizon/tasks/prepare.yml
-- name: Creating Horizon directories
+- name: Creating Horizon working directories
   file:
     path={{ item }}
     state=directory
-    recurse=yes
   with_items:
     - /var/log/horizon
-    - /run/uwsgi/horizon
+    - /etc/uwsgi.d/
     - /etc/uwsgi.d/horizon
+    - "{{ working_dir }}"
     - "{{ working_dir }}/openstack"
     - "{{ working_dir }}/virtualenvs/horizon"
 
 - name: Set the correct permissions on Horizon directories
   file:
-    path={{ item }}
+    path=/var/log/horizon
     owner={{ horizon_user }}
     group={{ horizon_group }}
-  with_items:
-    - /var/log/horizon
-    - /run/uwsgi/horizon
 
 - name: Adding /etc/logrotate.d/horizon file
   copy:
