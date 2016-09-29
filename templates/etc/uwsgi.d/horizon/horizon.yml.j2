@@ -1,6 +1,5 @@
 uwsgi:
-  socket: /run/uwsgi/horizon/horizon.sock
-  chmod-socket: 666
+  socket: 127.0.0.1:{{ horizon_internal_port }}
   processes: {{ horizon_uwsgi_processes }}
   threads: {{ horizon_uwsgi_threads }}
   harakiri: {{ horizon_uwsgi_harakiri }}
