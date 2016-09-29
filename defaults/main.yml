@@ -10,7 +10,7 @@ horizon_uid: 2003
 horizon_gid: 2003
 
 horizon_git_url: https://github.com/openstack/horizon.git
-horizon_version: stable/liberty
+horizon_version: stable/mitaka
 
 horizon_uwsgi_processes: 5
 horizon_uwsgi_threads: 2
