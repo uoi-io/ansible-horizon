@@ -10,6 +10,7 @@
     - horizon-download
     - horizon-virtualenv
     - horizon-install
+    - horizon-module
     - horizon-config
     - horizon-nginx
 
@@ -43,6 +44,11 @@
   when: horizon_uoi_download is defined and
         not horizon_uoi_download
   tags: [ horizon, horizon-install ]
+
+- include: modules-neutron-lbaasv2.yml
+  when: horizon_uoi_download is defined and
+        not horizon_uoi_download
+  tags: [ horizon, horizon-module ]
 
 - include: nginx.yml
   tags: [ horizon, horizon-nginx ]

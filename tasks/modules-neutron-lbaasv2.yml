@@ -1,0 +1,34 @@
+---
+# file: repo/horizon/tasks/modules.yml
+- name: Getting Horizon Neutron LBAASv2 module source code
+  git:
+    repo={{ horizon_module_lbaasv2_git_url }}
+    dest={{ working_dir}}/openstack/neutron_lbaas_dashboard
+    version={{ horizon_module_lbaasv2_version }}
+
+- name: Installing Horizon Neutron LBAASv2 module requirements via pip
+  pip:
+    virtualenv={{ working_dir }}/virtualenvs/horizon
+    requirements={{ working_dir }}/openstack/neutron_lbaas_dashboard/requirements.txt
+
+- name: Installing Horizon Neutron LBAASv2 module via setup.py
+  shell:
+    source {{ working_dir }}/virtualenvs/horizon/bin/activate && \
+    cd {{ working_dir }}/openstack/neutron_lbaas_dashboard && \
+    python setup.py install --record /var/log/horizon/horizon-neutron-lbaasv2-module.log
+  args:
+    executable: /bin/bash
+
+- name: Copying Horizon _1481_project_ng_loadbalancersv2_panel.py file
+  copy:
+    src={{ working_dir }}/virtualenvs/horizon/lib/python2.7/site-packages/neutron_lbaas_dashboard/enabled/_1481_project_ng_loadbalancersv2_panel.py
+    dest=/etc/openstack-dashboard/enabled/_1481_project_ng_loadbalancersv2_panel.py
+    remote_src=yes
+    group={{ horizon_group }}
+
+- name: Set the right user permissions to the virtualenv
+  file:
+    path={{ working_dir }}/virtualenvs/horizon
+    owner={{ horizon_uid }}
+    group={{ horizon_gid }}
+    recurse=yes

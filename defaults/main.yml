@@ -26,3 +26,8 @@ horizon_config: []
 horizon_caching: true
 horizon_caching_backend: django.core.cache.backends.memcached.MemcachedCache
 horizon_caching_servers: 172.0.0.124:11211;172.0.0.125:11211;172.0.0.126:11211
+
+# Neutron LBAASv2 Horizon module
+horizon_module_lbaasv2: true
+horizon_module_lbaasv2_git_url: https://github.com/openstack/neutron-lbaas-dashboard.git
+horizon_module_lbaasv2_version: "{{ horizon_version }}"
