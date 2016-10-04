@@ -11,6 +11,7 @@ horizon_packages:
   - libssl-dev
   - libmariadbclient-dev
   - postgresql-server-dev-all
+  - mime-support
 horizon_systemd_path: /lib/systemd
 horizon_uwsgi_path: /usr/local/bin/uwsgi
 horizon_nginx_user: www-data

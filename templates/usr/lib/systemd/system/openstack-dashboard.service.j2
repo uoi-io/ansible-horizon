@@ -1,9 +1,9 @@
 [Unit]
-Description=uWSGI instance to serve Horizon dashboard
+Description=OpenStack Dashboard (code-named Horizon)
 After=network.target syslog.target
 
 [Service]
-ExecStart={{ horizon_uwsgi_path }} --emperor /etc/uwsgi.d/horizon
+ExecStart={{ horizon_uwsgi_path }} --emperor /etc/uwsgi.d/horizon --mimefile /etc/mime.types
 ExecReload=/bin/kill -HUP $MAINPID
 KillSignal=SIGINT
 Restart=always

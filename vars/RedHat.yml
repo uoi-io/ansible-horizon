@@ -15,6 +15,7 @@ horizon_packages:
   - openldap-devel
   - openssl-devel
   - sqlite-devel
+  - mailcap
 horizon_systemd_path: /usr/lib/systemd
 horizon_uwsgi_path: /usr/bin/uwsgi
 horizon_nginx_user: nginx
