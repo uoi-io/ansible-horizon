@@ -8,4 +8,7 @@ server {
 		uwsgi_param SCRIPT_NAME /;
 	}
 
+        location /static {
+                alias {{ working_dir }}/virtualenvs/horizon/lib/python2.7/site-packages/static;
+        }
 }

@@ -21,11 +21,27 @@ horizon_nginx_bind: 0.0.0.0
 horizon_internal_port: 8080
 horizon_public_port: 80
 
-horizon_config: []
+# Config for /etc/openstack-dashboard/local_settings.py
+horizon_config_debug: false
+horizon_config_allow_hosts:
+  - 10.0.0.100
+horizon_config_keystone_host: 10.0.0.100
+horizon_config_keystone_version: v3
+horizon_config_default_role: user
+horizon_config_enable_backup: true
+horizon_config_enable_ha_router: true
+horizon_config_multidomain_support: true
+horizon_config_caching: true
+horizon_config_caching_servers:
+  - 172.0.0.6:11211
+  - 172.0.0.7:11211
+  - 172.0.0.8:11211
+horizon_config_themes:
+  - default
+horizon_config_secret_key: "{{ lookup('password', 'chars=ascii_letters,digits length=64') }}"
 
-horizon_caching: true
-horizon_caching_backend: django.core.cache.backends.memcached.MemcachedCache
-horizon_caching_servers: 172.0.0.124:11211;172.0.0.125:11211;172.0.0.126:11211
+# Add the possiblity to add option not in the template
+horizon_config_extras: []
 
 # Neutron LBAASv2 Horizon module
 horizon_module_lbaasv2: true

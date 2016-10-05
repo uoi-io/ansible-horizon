@@ -1,27 +1,17 @@
 ---
 # file: roles/horizon/tasks/config.yml
-- name: Adding caching information to a fragement file
-  template:
-    src=etc/openstack-dashboard/cache-fragment.j2
-    dest=/tmp/horizon-fragment
-  when: horizon_caching is defined and
-        horizon_caching
-
-- name: Merging fragment file to Horizon configuration
-  shell:
-    sed -i '/^CACHES/,/^}/d' /etc/openstack-dashboard/local_settings.py ; \
-    cat /tmp/horizon-fragment >> /etc/openstack-dashboard/local_settings.py ; \
-    rm -f /tmp/horizon-fragment
-  changed_when: false
-  when: horizon_caching is defined and
-        horizon_caching
-
 - name: Set Horizon configuration
+  template:
+    src=etc/openstack-dashboard/local_settings.py.j2
+    dest=/etc/openstack-dashboard/local_settings.py
+  notify: restart horizon
+
+- name: Set Horizon extras configuration
   lineinfile:
     dest=/etc/openstack-dashboard/local_settings.py
     regexp={{ item.key }}
     line={{ item.value }}
-  with_items: "{{ horizon_config }}"
+  with_items: "{{ horizon_config_extras }}"
   notify: restart horizon
 
 - meta: flush_handlers
