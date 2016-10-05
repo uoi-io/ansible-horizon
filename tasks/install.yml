@@ -11,6 +11,7 @@
     repo={{ horizon_git_url }}
     dest={{ working_dir}}/openstack/horizon
     version={{ horizon_version }}
+    force=yes
 
 - name: Installing Horizon requirements via pip
   pip:
@@ -22,6 +23,20 @@
     source {{ working_dir }}/virtualenvs/horizon/bin/activate && \
     cd {{ working_dir }}/openstack/horizon && \
     python setup.py install --record /var/log/horizon/horizon-setup.log
+  args:
+    executable: /bin/bash
+
+- name: Set the STATIC_ROOT variable to generate the static files
+  lineinfile:
+    dest={{ working_dir }}/openstack/horizon/openstack_dashboard/settings.py
+    regexp="^STATIC_ROOT = None"
+    line="STATIC_ROOT = '{{ working_dir }}/virtualenvs/horizon/lib/python2.7/site-packages/static'"
+
+- name: Generating Horizon static files
+  shell:
+    source {{ working_dir }}/virtualenvs/horizon/bin/activate && \
+    cd {{ working_dir }}/openstack/horizon && \
+    python manage.py collectstatic --noinput
   args:
     executable: /bin/bash
 
