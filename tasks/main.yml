@@ -13,6 +13,7 @@
     - horizon-module
     - horizon-config
     - horizon-nginx
+    - horizon-clean
 
 - include: user.yml
   tags: [ horizon, horizon-user ]
@@ -55,3 +56,8 @@
 
 - include: config.yml
   tags: [ horizon, horizon-config ]
+
+- include: clean.yml
+  when: horizon_cleaning is defined and
+        horizon_cleaning
+  tags: [ horizon, horizon-clean ]

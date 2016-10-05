@@ -1,0 +1,9 @@
+---
+# file: roles/horizon/tasks/clean.yml
+- name: Cleaning the OpenStack Horizon sources
+  file:
+    path={{ item }}
+    state=absent
+  with_items:
+    - "{{ working_dir }}/openstack/horizon"
+    - "{{ working_dir }}/openstack/neutron_lbaas_dashboard"
