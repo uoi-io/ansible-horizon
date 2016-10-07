@@ -1,14 +1,22 @@
+upstream horizon {
+    server {{ horizon_internal_bind | default('127.0.0.1') }}:{{ horizon_internal_port }};
+}
+
 server {
 	listen {{ horizon_nginx_bind }}:{{ horizon_public_port }} default_server;
 	server_name localhost;
 
 	location / {
 		include uwsgi_params;
-		uwsgi_pass 127.0.0.1:{{ horizon_internal_port }};
+		uwsgi_pass horizon;
 		uwsgi_param SCRIPT_NAME /;
+		uwsgi_param Host $host;
+		uwsgi_param X-Real-IP $remote_addr;
+		uwsgi_param X-Forwarded-For $proxy_add_x_forwarded_for;
+		uwsgi_param X-Forwarded-Proto $http_x_forwarded_proto;
 	}
 
-        location /static {
-                alias {{ working_dir }}/virtualenvs/horizon/lib/python2.7/site-packages/static;
+        location /static/ {
+                alias {{ working_dir }}/virtualenvs/horizon/lib/python2.7/site-packages/static/;
         }
 }

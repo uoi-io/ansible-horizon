@@ -1,5 +1,5 @@
 uwsgi:
-  socket: 127.0.0.1:{{ horizon_internal_port }}
+  socket: {{ horizon_internal_bind |default('127.0.0.1') }}:{{ horizon_internal_port }}
   processes: {{ horizon_uwsgi_processes }}
   threads: {{ horizon_uwsgi_threads }}
   harakiri: {{ horizon_uwsgi_harakiri }}
@@ -12,6 +12,7 @@ uwsgi:
   memory-report: false
   vacuum: true
   die-on-term: true
+  env: LANG=en_US.UTF-8
 
   name: horizon-dashboard
   uid: {{ horizon_user }}
@@ -21,4 +22,4 @@ uwsgi:
   chdir: {{ working_dir }}/virtualenvs/horizon/lib/python2.7/site-packages
   wsgi-file: openstack_dashboard/wsgi/django.wsgi
 
-  daemonize: /var/log/horizon/horizon.log
+  daemonize: {{ horizon_log | default('/var/log/horizon/horizon.log') }}
