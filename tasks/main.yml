@@ -58,6 +58,4 @@
   tags: [ horizon, horizon-config ]
 
 - include: clean.yml
-  when: horizon_cleaning is defined and
-        horizon_cleaning
   tags: [ horizon, horizon-clean ]
