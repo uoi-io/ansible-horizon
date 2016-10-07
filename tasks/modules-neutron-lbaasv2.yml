@@ -19,6 +19,14 @@
   args:
     executable: /bin/bash
 
+- name: Generating Horizon Neutron LBAASv2 static files
+  shell:
+    source {{ working_dir }}/virtualenvs/horizon/bin/activate && \
+    python manage.py collectstatic --noinput
+  args:
+    chdir: "{{ working_dir }}/openstack/neutron_lbaas_dashboard"
+    executable: /bin/bash
+
 - name: Copying Horizon _1481_project_ng_loadbalancersv2_panel.py file
   copy:
     src={{ working_dir }}/virtualenvs/horizon/lib/python2.7/site-packages/neutron_lbaas_dashboard/enabled/_1481_project_ng_loadbalancersv2_panel.py
