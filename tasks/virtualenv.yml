@@ -7,5 +7,4 @@
     virtualenv={{ working_dir }}/virtualenvs/horizon
   with_items:
     - pip
-    - MySQL-python
     - python-memcached
