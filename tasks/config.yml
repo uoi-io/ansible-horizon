@@ -9,7 +9,7 @@
 - name: Set Horizon extras configuration
   lineinfile:
     dest=/etc/openstack-dashboard/local_settings.py
-    regexp={{ item.key }}
+    regexp={{ item.option }}
     line={{ item.value }}
   with_items: "{{ horizon_config_extras }}"
   notify: restart horizon
