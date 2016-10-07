@@ -3,7 +3,7 @@
 horizon_firewalld: true
 horizon_selinux: true
 horizon_uoi_download: false
-horizon_cleaning: true
+horizon_cleaning: false
 
 horizon_user: horizon
 horizon_group: horizon

@@ -7,3 +7,17 @@
   with_items:
     - "{{ working_dir }}/openstack/horizon"
     - "{{ working_dir }}/openstack/neutron_lbaas_dashboard"
+  when: horizon_cleaning is defined and
+        horizon_cleaning
+
+- name: Cleaning the /etc/openstack-dasbhoard directory
+  shell:
+    rm -f /etc/openstack-dashboard/{{ item }}
+  with_items:
+    - "*.pyc"
+    - "*.example"
+    - local_settings.d/*.example
+    - enabled/*.example
+  args:
+    executable: /bin/bash
+  changed_when: false

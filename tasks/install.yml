@@ -21,9 +21,9 @@
 - name: Installing Horizon via setup.py
   shell:
     source {{ working_dir }}/virtualenvs/horizon/bin/activate && \
-    cd {{ working_dir }}/openstack/horizon && \
     python setup.py install --record /var/log/horizon/horizon-setup.log
   args:
+    chdir: "{{ working_dir }}/openstack/horizon"
     executable: /bin/bash
 
 - name: Set the STATIC_ROOT variable to generate the static files
@@ -35,9 +35,9 @@
 - name: Generating Horizon static files
   shell:
     source {{ working_dir }}/virtualenvs/horizon/bin/activate && \
-    cd {{ working_dir }}/openstack/horizon && \
     python manage.py collectstatic --noinput
   args:
+    chdir: "{{ working_dir }}/openstack/horizon"
     executable: /bin/bash
 
 - name: Copying Horizon local_settings.py config file
@@ -46,7 +46,6 @@
     dest={{ working_dir }}/virtualenvs/horizon/lib/python2.7/site-packages/openstack_dashboard/local/local_settings.py
     remote_src=yes
     group={{ horizon_group }}
-    mode=0640
 
 - name: Linking /etc/openstack-dashboard directory to Horizon virtualenv
   file:
@@ -57,6 +56,6 @@
 - name: Set the right user permissions to the virtualenv
   file:
     path={{ working_dir }}/virtualenvs/horizon
-    owner={{ horizon_uid }}
-    group={{ horizon_gid }}
+    owner={{ horizon_user }}
+    group={{ horizon_group }}
     recurse=yes
