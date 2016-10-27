@@ -23,27 +23,27 @@
 
 - include: firewall.yml
   when: horizon_firewalld is defined and
-        horizon_firewalld
+        horizon_firewalld | bool
   tags: [ horizon, horizon-firewalld ]
 
 - include: selinux.yml
   when: horizon_selinux is defined and
-        horizon_selinux
+        horizon_selinux | bool
   tags: [ horizon, horizon-selinux ]
 
 - include: download.yml
   when: horizon_uoi_download is defined and
-        horizon_uoi_download
+        horizon_uoi_download | bool
   tags: [ horizon, horizon-download ]
 
 - include: virtualenv.yml
   tags: [ horizon, horizon-virtualenv ]
   when: horizon_uoi_download is defined and
-        not horizon_uoi_download
+        not horizon_uoi_download | bool
 
 - include: install.yml
   when: horizon_uoi_download is defined and
-        not horizon_uoi_download
+        not horizon_uoi_download | bool
   tags: [ horizon, horizon-install ]
 
 - include: modules-neutron-lbaasv2.yml
