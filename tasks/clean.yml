@@ -8,7 +8,7 @@
     - "{{ working_dir }}/openstack/horizon"
     - "{{ working_dir }}/openstack/neutron_lbaas_dashboard"
   when: horizon_cleaning is defined and
-        horizon_cleaning
+        horizon_cleaning | bool
 
 - name: Cleaning the /etc/openstack-dasbhoard directory
   shell:

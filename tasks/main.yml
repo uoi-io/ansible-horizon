@@ -48,7 +48,7 @@
 
 - include: modules-neutron-lbaasv2.yml
   when: horizon_uoi_download is defined and
-        not horizon_uoi_download
+        not horizon_uoi_download | bool
   tags: [ horizon, horizon-module ]
 
 - include: nginx.yml
