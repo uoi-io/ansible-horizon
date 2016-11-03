@@ -1,5 +1,8 @@
 Ansible OpenStack Horizon (OpenStack ready)
 =========
+
+[![Build Status](https://travis-ci.org/uoi-io/ansible-horizon.svg?branch=master)](https://travis-ci.org/uoi-io/ansible-horizon) [![Ansible Galaxy](https://img.shields.io/badge/galaxy-uoi.horizon-green.svg?style=flat)](https://galaxy.ansible.com/uoi-io/horizon/)
+
 This role allows you to deploy an OpenStack Horizon dashboard.
 
 This OpenStack component will be deploy in a Python ``virtualenv`` by using ``pip``. To serve the pages, Nginx and uWSGI will be our superheros !
